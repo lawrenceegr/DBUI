@@ -14,7 +14,7 @@
    <string>Database Manager Pro</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="mainHorizontalLayout">
+   <layout class="QVBoxLayout" name="centralLayout">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -31,511 +31,286 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="sidebarFrame">
-      <property name="minimumSize">
-       <size>
-        <width>220</width>
-        <height>0</height>
-       </size>
+     <widget class="QStackedWidget" name="appStack">
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>220</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="sidebarLayout">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="logoLabel">
-         <property name="text">
-          <string>DATABASE MANAGER</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="navLabel">
-         <property name="text">
-          <string>NAVIGATION</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnDashboard">
-         <property name="text">
-          <string>Dashboard</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnTables">
-         <property name="text">
-          <string>Tables</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnQuery">
-         <property name="text">
-          <string>Query Editor</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="sidebarSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="systemLabel">
-         <property name="text">
-          <string>SYSTEM</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnSettings">
-         <property name="text">
-          <string>Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnBackup">
-         <property name="text">
-          <string>Backup</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="connectionStatus">
-         <property name="text">
-          <string>Connected</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="mainContentLayout">
-      <property name="spacing">
-       <number>16</number>
-      </property>
-      <property name="leftMargin">
-       <number>24</number>
-      </property>
-      <property name="topMargin">
-       <number>24</number>
-      </property>
-      <property name="rightMargin">
-       <number>24</number>
-      </property>
-      <property name="bottomMargin">
-       <number>24</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout" name="headerLayout">
+      <widget class="QWidget" name="landingPage">
+       <layout class="QHBoxLayout" name="landingPageLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QLabel" name="pageTitle">
-          <property name="text">
-           <string>Dashboard</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="headerSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="searchEdit">
+         <widget class="QFrame" name="connectionsListPanel">
           <property name="minimumSize">
            <size>
             <width>300</width>
-            <height>40</height>
+            <height>0</height>
            </size>
           </property>
-          <property name="placeholderText">
-           <string>Search records...</string>
+          <property name="maximumSize">
+           <size>
+            <width>400</width>
+            <height>16777215</height>
+           </size>
           </property>
-          <property name="clearButtonEnabled">
-           <bool>true</bool>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
           </property>
+          <layout class="QVBoxLayout" name="connectionsListLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="btnQuickConnect">
+             <property name="text">
+              <string>+ Quick Connect</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="savedConnectionsLabel">
+             <property name="text">
+              <string>SAVED CONNECTIONS</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="savedConnectionsList">
+             <property name="alternatingRowColors">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="recentConnectionsLabel">
+             <property name="text">
+              <string>RECENT CONNECTIONS</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="recentConnectionsList">
+             <property name="alternatingRowColors">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="connectionFormPanel">
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <layout class="QVBoxLayout" name="connectionFormPanelLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QStackedWidget" name="stackedWidget">
-        <property name="currentIndex">
+      </widget>
+      <widget class="QWidget" name="connectedPage">
+       <layout class="QHBoxLayout" name="connectedPageLayout">
+        <property name="spacing">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="dashboardPage">
-         <layout class="QVBoxLayout" name="dashboardLayout">
-          <item>
-           <widget class="QLabel" name="dashboardWelcome">
-            <property name="text">
-             <string>Welcome to Database Manager Pro</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="statsLayout">
-            <item>
-             <widget class="QFrame" name="statCard1">
-              <property name="frameShape">
-               <enum>QFrame::Shape::StyledPanel</enum>
-              </property>
-              <layout class="QVBoxLayout" name="statCard1Layout">
-               <item>
-                <widget class="QLabel" name="statLabel1">
-                 <property name="text">
-                  <string>Total Records</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="statValue1">
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="statCard2">
-              <property name="frameShape">
-               <enum>QFrame::Shape::StyledPanel</enum>
-              </property>
-              <layout class="QVBoxLayout" name="statCard2Layout">
-               <item>
-                <widget class="QLabel" name="statLabel2">
-                 <property name="text">
-                  <string>Tables</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="statValue2">
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="statCard3">
-              <property name="frameShape">
-               <enum>QFrame::Shape::StyledPanel</enum>
-              </property>
-              <layout class="QVBoxLayout" name="statCard3Layout">
-               <item>
-                <widget class="QLabel" name="statLabel3">
-                 <property name="text">
-                  <string>Database Size</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="statValue3">
-                 <property name="text">
-                  <string>0 KB</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="dashboardSpacer">
-            <property name="orientation">
-             <enum>Qt::Orientation::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="tablesPage">
-         <layout class="QHBoxLayout" name="tablesPageLayout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="sidebarFrame">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <layout class="QVBoxLayout" name="sidebarLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="logoLabel">
+             <property name="text">
+              <string>DATABASE MANAGER</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="navLabel">
+             <property name="text">
+              <string>NAVIGATION</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnTables">
+             <property name="text">
+              <string>Tables</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnQuery">
+             <property name="text">
+              <string>Query Editor</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="sidebarSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="systemLabel">
+             <property name="text">
+              <string>SYSTEM</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnSettings">
+             <property name="text">
+              <string>Settings</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnDisconnect">
+             <property name="text">
+              <string>Disconnect</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="connectionStatus">
+             <property name="text">
+              <string>Connected</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="mainContentLayout">
           <property name="spacing">
-           <number>12</number>
+           <number>16</number>
+          </property>
+          <property name="leftMargin">
+           <number>24</number>
+          </property>
+          <property name="topMargin">
+           <number>24</number>
+          </property>
+          <property name="rightMargin">
+           <number>24</number>
+          </property>
+          <property name="bottomMargin">
+           <number>24</number>
           </property>
           <item>
-           <widget class="QFrame" name="tableListFrame">
-            <property name="minimumSize">
-             <size>
-              <width>220</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>280</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Shape::StyledPanel</enum>
-            </property>
-            <layout class="QVBoxLayout" name="tableListLayout">
-             <property name="spacing">
-              <number>8</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="tableListTitle">
-               <property name="text">
-                <string>Database Tables</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignmentFlag::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="tableListActionsLayout">
-               <item>
-                <widget class="QPushButton" name="btnAddTable">
-                 <property name="text">
-                  <string>Add Table</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnRefreshTables">
-                 <property name="text">
-                  <string>Refresh</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QListWidget" name="tableListWidget">
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="tableContentFrame">
-            <property name="frameShape">
-             <enum>QFrame::Shape::StyledPanel</enum>
-            </property>
-            <layout class="QVBoxLayout" name="tableContentLayout">
-             <property name="spacing">
-              <number>8</number>
-             </property>
-             <item>
-              <layout class="QHBoxLayout" name="tableContentHeaderLayout">
-               <item>
-                <widget class="QLabel" name="selectedTableLabel">
-                 <property name="text">
-                  <string>Select a table to view its contents</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="tableContentSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnEditRecord">
-                 <property name="text">
-                  <string>Edit</string>
-                 </property>
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnDeleteRecord">
-                 <property name="text">
-                  <string>Delete</string>
-                 </property>
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnRefreshTable">
-                 <property name="text">
-                  <string>Refresh</string>
-                 </property>
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnExportTable">
-                 <property name="text">
-                  <string>Export</string>
-                 </property>
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QTableWidget" name="dataTableWidget">
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionMode">
-                <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-               </property>
-               <property name="sortingEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="recordsInfoLayout">
-               <item>
-                <widget class="QLabel" name="recordsInfoLabel">
-                 <property name="text">
-                  <string>No table selected</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="recordsInfoSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="queryPage">
-         <layout class="QVBoxLayout" name="queryPageLayout">
-          <property name="spacing">
-           <number>12</number>
-          </property>
-          <item>
-           <widget class="QTextEdit" name="queryEditor">
-            <property name="placeholderText">
-             <string>-- Enter your SQL query here
-SELECT * FROM customers WHERE active = 1;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="queryActionLayout">
+           <layout class="QHBoxLayout" name="headerLayout">
             <item>
-             <spacer name="queryActionSpacer">
+             <widget class="QLabel" name="pageTitle">
+              <property name="text">
+               <string>Tables</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="headerSpacer">
               <property name="orientation">
                <enum>Qt::Orientation::Horizontal</enum>
               </property>
@@ -548,75 +323,312 @@ SELECT * FROM customers WHERE active = 1;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="btnExecuteQuery">
+             <widget class="QLineEdit" name="searchEdit">
               <property name="minimumSize">
                <size>
-                <width>200</width>
-                <height>50</height>
+                <width>300</width>
+                <height>40</height>
                </size>
               </property>
-              <property name="text">
-               <string>Execute Query</string>
+              <property name="placeholderText">
+               <string>Search records...</string>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
            </layout>
           </item>
           <item>
-           <widget class="QTableWidget" name="queryResultTable">
-            <property name="alternatingRowColors">
-             <bool>true</bool>
+           <widget class="QStackedWidget" name="stackedWidget">
+            <property name="currentIndex">
+             <number>0</number>
             </property>
-            <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-            </property>
+            <widget class="QWidget" name="tablesPage">
+             <layout class="QHBoxLayout" name="tablesPageLayout">
+              <property name="spacing">
+               <number>12</number>
+              </property>
+              <item>
+               <widget class="QFrame" name="tableListFrame">
+                <property name="minimumSize">
+                 <size>
+                  <width>220</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>280</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <layout class="QVBoxLayout" name="tableListLayout">
+                 <property name="spacing">
+                  <number>8</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="tableListTitle">
+                   <property name="text">
+                    <string>Database Tables</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="tableListActionsLayout">
+                   <item>
+                    <widget class="QPushButton" name="btnAddTable">
+                     <property name="text">
+                      <string>Add Table</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnRefreshTables">
+                     <property name="text">
+                      <string>Refresh</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QListWidget" name="tableListWidget">
+                   <property name="alternatingRowColors">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="tableContentFrame">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <layout class="QVBoxLayout" name="tableContentLayout">
+                 <property name="spacing">
+                  <number>8</number>
+                 </property>
+                 <item>
+                  <layout class="QHBoxLayout" name="tableContentHeaderLayout">
+                   <item>
+                    <widget class="QLabel" name="selectedTableLabel">
+                     <property name="text">
+                      <string>Select a table to view its contents</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="tableContentSpacer">
+                     <property name="orientation">
+                      <enum>Qt::Orientation::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnEditRecord">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Edit</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnDeleteRecord">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Delete</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnRefreshTable">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Refresh</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnExportTable">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Export</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QTableWidget" name="dataTableWidget">
+                   <property name="alternatingRowColors">
+                    <bool>true</bool>
+                   </property>
+                   <property name="selectionMode">
+                    <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+                   </property>
+                   <property name="selectionBehavior">
+                    <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+                   </property>
+                   <property name="sortingEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="recordsInfoLayout">
+                   <item>
+                    <widget class="QLabel" name="recordsInfoLabel">
+                     <property name="text">
+                      <string>No table selected</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="recordsInfoSpacer">
+                     <property name="orientation">
+                      <enum>Qt::Orientation::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="queryPage">
+             <layout class="QVBoxLayout" name="queryPageLayout">
+              <property name="spacing">
+               <number>12</number>
+              </property>
+              <item>
+               <widget class="QTextEdit" name="queryEditor">
+                <property name="placeholderText">
+                 <string>-- Enter your SQL query here
+SELECT * FROM customers WHERE active = 1;</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="queryActionLayout">
+                <item>
+                 <spacer name="queryActionSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnExecuteQuery">
+                  <property name="minimumSize">
+                   <size>
+                    <width>200</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Execute Query</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="queryResultTable">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="settingsPage">
+             <layout class="QVBoxLayout" name="settingsPageLayout">
+              <item>
+               <widget class="QLabel" name="settingsTitle">
+                <property name="text">
+                 <string>Application Settings</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="connectionGroup">
+                <property name="title">
+                 <string>Database Connection</string>
+                </property>
+                <layout class="QVBoxLayout" name="connectionGroupLayout">
+                 <item>
+                  <widget class="QPushButton" name="btnConfigureDatabase">
+                   <property name="text">
+                    <string>Configure Database Connection</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="settingsSpacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="settingsPage">
-         <layout class="QVBoxLayout" name="settingsPageLayout">
-          <item>
-           <widget class="QLabel" name="settingsTitle">
-            <property name="text">
-             <string>Application Settings</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="connectionGroup">
-            <property name="title">
-             <string>Database Connection</string>
-            </property>
-            <layout class="QVBoxLayout" name="connectionGroupLayout">
-             <item>
-              <widget class="QPushButton" name="btnConfigureDatabase">
-               <property name="text">
-                <string>Configure Database Connection</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="settingsSpacer">
-            <property name="orientation">
-             <enum>Qt::Orientation::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </item>
-     </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>

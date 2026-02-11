@@ -2,6 +2,8 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QIcon>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -14,9 +16,8 @@ int main(int argc, char *argv[])
         styleFile.close();
     }
 
-    a.setWindowIcon(QIcon(":/icon.png"));
-
     MainWindow w;
+    w.setWindowIcon(QIcon(":/logo.png"));
     w.show();
     return a.exec();
 }

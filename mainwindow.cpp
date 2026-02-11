@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "src/databasemanager.h"
 #include "src/configdialog.h"
+#include "src/connectionstore.h"
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFile>
@@ -11,11 +12,15 @@
 #include <QSqlRecord>
 #include <QMessageBox>
 #include <QSettings>
+#include <QScrollArea>
+#include <QMenuBar>
+#include <QMenu>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_queryModel(nullptr)
+    , m_connectionForm(nullptr)
 {
     ui->setupUi(this);
 
@@ -30,11 +35,19 @@ MainWindow::MainWindow(QWidget *parent)
     QSettings settings("DBUI", "DatabaseManager");
     m_config.load(settings);
 
+    iconMenu = new QMenu(this);
+    iconMenu->setIcon(QIcon(":/logo.svg"));
+    ui->menubar->setCornerWidget(new QLabel(), Qt::TopLeftCorner);
+    ui->menubar->insertMenu(ui->menubar->actions().isEmpty() ? nullptr : ui->menubar->actions().first(), iconMenu);
+
+    // Load connection store
+    ConnectionStore::instance().load();
+
+    // Setup the landing page with embedded connection form
+    setupLandingPage();
+
     // Initial UI state
     updateConnectionStatus();
-
-    // Set initial sidebar button state
-    ui->btnDashboard->setChecked(true);
 
     // Initialize table content buttons as disabled
     setTableContentButtonsEnabled(false);
@@ -54,14 +67,21 @@ void MainWindow::updateConnectionStatus()
     bool connected = DatabaseManager::instance().isConnected();
 
     if (connected) {
+        ui->appStack->setCurrentIndex(1); // Show connected app
         ui->connectionStatus->setText("Connected");
         ui->connectionStatus->setStyleSheet("color: #a6e3a1;"); // Green
         m_statusLabel->setText("Connected: " + m_config.getTypeName());
+        ui->btnTables->setChecked(true);
+        ui->btnQuery->setChecked(false);
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->pageTitle->setText("Tables");
         refreshTableList();
     } else {
+        ui->appStack->setCurrentIndex(0); // Show landing page
         ui->connectionStatus->setText("Disconnected");
         ui->connectionStatus->setStyleSheet("color: #f38ba8;"); // Red
         m_statusLabel->setText("Disconnected");
+        refreshConnectionLists();
         // Clear table list when disconnected
         ui->tableListWidget->clear();
         ui->dataTableWidget->clear();
@@ -88,9 +108,6 @@ void MainWindow::refreshTableList()
     for (const QString &table : tables) {
         ui->tableListWidget->addItem(table);
     }
-
-    // Update dashboard stats
-    ui->statValue2->setText(QString::number(tables.count()));
 }
 
 void MainWindow::setTableContentButtonsEnabled(bool enabled)
@@ -209,7 +226,7 @@ void MainWindow::loadTableData(const QString &tableName)
     setTableContentButtonsEnabled(true);
 }
 
-// ========== Menu Actions - File ==========
+// Menu Actions - File 
 
 void MainWindow::on_actionNew_triggered()
 {
@@ -250,7 +267,7 @@ void MainWindow::on_actionExit_triggered()
     close();
 }
 
-// ========== Menu Actions - Database ==========
+// Menu Actions - Database 
 
 void MainWindow::on_actionConnect_Database_triggered()
 {
@@ -263,6 +280,7 @@ void MainWindow::on_actionConnect_Database_triggered()
 
         // Try to connect
         if (DatabaseManager::instance().initialize(m_config)) {
+            ConnectionStore::instance().addRecentConnection(m_config);
             updateConnectionStatus();
             QMessageBox::information(this, "Connected",
                 "Successfully connected to database.");
@@ -284,7 +302,7 @@ void MainWindow::on_actionDisconnect_triggered()
     }
 }
 
-// ========== Menu Actions - View ==========
+// Menu Actions - View 
 
 void MainWindow::on_actionRefresh_triggered()
 {
@@ -305,7 +323,7 @@ void MainWindow::on_actionFullScreen_triggered()
     }
 }
 
-// ========== Query Tab ==========
+// Query Tab 
 
 void MainWindow::on_btnExecuteQuery_clicked()
 {
@@ -313,7 +331,7 @@ void MainWindow::on_btnExecuteQuery_clicked()
     executeQuery(sql);
 }
 
-// ========== Data Tab Buttons ==========
+// Data Tab Buttons 
 
 void MainWindow::on_btnRefresh_clicked()
 {
@@ -323,54 +341,38 @@ void MainWindow::on_btnRefresh_clicked()
     }
 }
 
-// ========== Sidebar Navigation ==========
-
-void MainWindow::on_btnDashboard_clicked()
-{
-    // Update button states
-    ui->btnDashboard->setChecked(true);
-    ui->btnTables->setChecked(false);
-    ui->btnQuery->setChecked(false);
-
-    // Switch to dashboard page
-    ui->stackedWidget->setCurrentIndex(0);
-    ui->pageTitle->setText("Dashboard");
-}
+// Sidebar Navigation 
 
 void MainWindow::on_btnTables_clicked()
 {
-    // Update button states
-    ui->btnDashboard->setChecked(false);
     ui->btnTables->setChecked(true);
     ui->btnQuery->setChecked(false);
 
-    // Switch to tables page
-    ui->stackedWidget->setCurrentIndex(1);
-    ui->pageTitle->setText("Database Tables");
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->pageTitle->setText("Tables");
 }
 
 void MainWindow::on_btnQuery_clicked()
 {
-    // Update button states
-    ui->btnDashboard->setChecked(false);
     ui->btnTables->setChecked(false);
     ui->btnQuery->setChecked(true);
 
-    // Switch to query editor page
-    ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(1);
     ui->pageTitle->setText("Query Editor");
 }
 
 void MainWindow::on_btnSettings_clicked()
 {
-    // Update button states
-    ui->btnDashboard->setChecked(false);
     ui->btnTables->setChecked(false);
     ui->btnQuery->setChecked(false);
 
-    // Switch to settings page
-    ui->stackedWidget->setCurrentIndex(3);
+    ui->stackedWidget->setCurrentIndex(2);
     ui->pageTitle->setText("Settings");
+}
+
+void MainWindow::on_btnDisconnect_clicked()
+{
+    on_actionDisconnect_triggered();
 }
 
 void MainWindow::on_btnConfigureDatabase_clicked()
@@ -378,7 +380,7 @@ void MainWindow::on_btnConfigureDatabase_clicked()
     on_actionConnect_Database_triggered();
 }
 
-// ========== Table List Actions ==========
+// Table List Actions 
 
 void MainWindow::on_btnAddTable_clicked()
 {
@@ -400,7 +402,7 @@ void MainWindow::on_tableListWidget_itemClicked(QListWidgetItem *item)
     }
 }
 
-// ========== Table Content Actions ==========
+// Table Content Actions 
 
 void MainWindow::on_btnRefreshTable_clicked()
 {
@@ -489,5 +491,119 @@ void MainWindow::on_btnDeleteRecord_clicked()
         QMessageBox::information(this, "Delete Record",
             "Use the Query Editor to delete records with DELETE statements.\n\n"
             "Example: DELETE FROM " + m_currentTable + " WHERE id = ?");
+    }
+}
+
+// Landing Page 
+
+void MainWindow::setupLandingPage()
+{
+    // Create connection form and embed it in the right panel via a scroll area
+    QScrollArea* scrollArea = new QScrollArea(this);
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setFrameShape(QFrame::NoFrame);
+
+    m_connectionForm = new ConnectionFormWidget(this);
+    m_connectionForm->setConfig(m_config);
+    scrollArea->setWidget(m_connectionForm);
+
+    ui->connectionFormPanelLayout->addWidget(scrollArea);
+
+    // Connect form signals
+    connect(m_connectionForm, &ConnectionFormWidget::connectRequested,
+            this, &MainWindow::onFormConnectRequested);
+    connect(m_connectionForm, &ConnectionFormWidget::saveRequested,
+            this, &MainWindow::onFormSaveRequested);
+
+    // Connect connection store changes
+    connect(&ConnectionStore::instance(), &ConnectionStore::connectionsChanged,
+            this, &MainWindow::refreshConnectionLists);
+
+    // Initial population
+    refreshConnectionLists();
+}
+
+void MainWindow::refreshConnectionLists()
+{
+    const auto& store = ConnectionStore::instance();
+
+    // Populate saved connections
+    ui->savedConnectionsList->clear();
+    for (int i = 0; i < store.savedConnections().size(); ++i) {
+        const SavedConnection& sc = store.savedConnections()[i];
+        QString displayText = sc.config.connectionName;
+        QString subText;
+        if (sc.config.type == DatabaseConfig::SQLite) {
+            subText = sc.config.name;
+        } else {
+            subText = sc.config.host + ":" + QString::number(sc.config.port) + "/" + sc.config.name;
+        }
+
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(displayText + "\n" + subText);
+        item->setData(Qt::UserRole, i);
+        item->setData(Qt::UserRole + 1, sc.config.getTypeName().toLower());
+        ui->savedConnectionsList->addItem(item);
+    }
+
+    // Update saved count label
+    ui->savedConnectionsLabel->setText(
+        QString("SAVED CONNECTIONS  %1").arg(store.savedConnections().size()));
+
+    // Populate recent connections
+    ui->recentConnectionsList->clear();
+    for (int i = 0; i < store.recentConnections().size(); ++i) {
+        const RecentConnection& rc = store.recentConnections()[i];
+        QString displayText = rc.config.connectionName;
+        QString subText = rc.timeAgo();
+
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(displayText + "\n" + subText);
+        item->setData(Qt::UserRole, i);
+        item->setData(Qt::UserRole + 1, rc.config.getTypeName().toLower());
+        ui->recentConnectionsList->addItem(item);
+    }
+
+    // Update recent count label
+    ui->recentConnectionsLabel->setText(
+        QString("RECENT CONNECTIONS  %1").arg(store.recentConnections().size()));
+}
+
+void MainWindow::onFormConnectRequested(const DatabaseConfig& config)
+{
+    m_config = config;
+
+    if (DatabaseManager::instance().initialize(m_config)) {
+        // Add to recent connections
+        ConnectionStore::instance().addRecentConnection(m_config);
+        updateConnectionStatus();
+    } else {
+        QMessageBox::critical(this, "Connection Failed",
+            DatabaseManager::instance().getLastError());
+    }
+}
+
+void MainWindow::onFormSaveRequested(const DatabaseConfig& config)
+{
+    ConnectionStore::instance().addSavedConnection(config);
+}
+
+void MainWindow::on_savedConnectionsList_itemClicked(QListWidgetItem *item)
+{
+    if (!item) return;
+    int index = item->data(Qt::UserRole).toInt();
+    const auto& saved = ConnectionStore::instance().savedConnections();
+    if (index >= 0 && index < saved.size()) {
+        m_connectionForm->setConfig(saved[index].config);
+    }
+}
+
+void MainWindow::on_recentConnectionsList_itemClicked(QListWidgetItem *item)
+{
+    if (!item) return;
+    int index = item->data(Qt::UserRole).toInt();
+    const auto& recent = ConnectionStore::instance().recentConnections();
+    if (index >= 0 && index < recent.size()) {
+        m_connectionForm->setConfig(recent[index].config);
     }
 }

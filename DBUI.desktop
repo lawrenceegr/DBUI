@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=DBUI
+Comment=DBUI - Database UI
+Exec=DBUI
+Icon=dbui
+StartupWMClass=DBUI
+Categories=Utility;

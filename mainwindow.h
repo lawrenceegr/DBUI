@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QListWidgetItem>
 #include "src/databaseconfig.h"
+#include "src/connectionformwidget.h"
+#include <QMenu>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -31,12 +33,19 @@ private:
     QSqlQueryModel *m_queryModel;
     QLabel *m_statusLabel;
 
+    QMenu *iconMenu;
+
     // Helper functions
     void updateConnectionStatus();
     void executeQuery(const QString &sql);
     void loadTableData(const QString &tableName);
     void refreshTableList();
     void setTableContentButtonsEnabled(bool enabled);
+    void setupLandingPage();
+    void refreshConnectionLists();
+
+    // Landing page
+    ConnectionFormWidget* m_connectionForm;
 
     // Current selected table
     QString m_currentTable;
@@ -63,10 +72,10 @@ private slots:
     void on_btnRefresh_clicked();
 
     // Sidebar navigation
-    void on_btnDashboard_clicked();
     void on_btnTables_clicked();
     void on_btnQuery_clicked();
     void on_btnSettings_clicked();
+    void on_btnDisconnect_clicked();
 
     // Settings page
     void on_btnConfigureDatabase_clicked();
@@ -81,6 +90,12 @@ private slots:
     void on_btnExportTable_clicked();
     void on_btnEditRecord_clicked();
     void on_btnDeleteRecord_clicked();
+
+    // Landing page actions
+    void onFormConnectRequested(const DatabaseConfig& config);
+    void onFormSaveRequested(const DatabaseConfig& config);
+    void on_savedConnectionsList_itemClicked(QListWidgetItem *item);
+    void on_recentConnectionsList_itemClicked(QListWidgetItem *item);
 
 };
 

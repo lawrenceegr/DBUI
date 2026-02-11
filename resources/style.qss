@@ -88,10 +88,10 @@ QMenu::separator {
 
 /* Logo Label */
 #logoLabel {
-    font-size: 14pt;
+    font-size: 12pt;
     font-weight: bold;
     color: #74c7ec;
-    padding: 24px 20px;
+    padding: 20px 16px;
     background-color: #11111b;
     border-bottom: 1px solid #313244;
 }
@@ -103,6 +103,16 @@ QMenu::separator {
     padding: 16px 20px;
     background-color: rgba(166, 227, 161, 0.1);
     border-top: 1px solid #313244;
+}
+
+/* Disconnect Button */
+#btnDisconnect {
+    color: #f38ba8;
+}
+
+#btnDisconnect:hover {
+    background-color: rgba(243, 139, 168, 0.15);
+    color: #f38ba8;
 }
 
 /* Page Title */
@@ -441,4 +451,307 @@ QToolTip {
     border: 1px solid #45475a;
     border-radius: 4px;
     padding: 4px 8px;
+}
+
+/* Landing Page */
+
+/* Connections List Panel (left side) */
+#connectionsListPanel {
+    background-color: #181825;
+    border: none;
+    border-right: 1px solid #313244;
+}
+
+#btnQuickConnect {
+    background-color: #313244;
+    color: #cdd6f4;
+    padding: 12px 16px;
+    border: none;
+    border-bottom: 1px solid #45475a;
+    border-radius: 0px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#btnQuickConnect:hover {
+    background-color: #45475a;
+}
+
+#savedConnectionsLabel, #recentConnectionsLabel {
+    color: #6c7086;
+    font-size: 8pt;
+    font-weight: bold;
+    padding: 12px 16px 6px 16px;
+    letter-spacing: 1px;
+    border: none;
+}
+
+#savedConnectionsList, #recentConnectionsList {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0px;
+}
+
+#savedConnectionsList::item, #recentConnectionsList::item {
+    padding: 10px 16px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid #313244;
+    color: #cdd6f4;
+}
+
+#savedConnectionsList::item:hover, #recentConnectionsList::item:hover {
+    background-color: #313244;
+}
+
+#savedConnectionsList::item:selected, #recentConnectionsList::item:selected {
+    background-color: #45475a;
+    border-left: 3px solid #74c7ec;
+}
+
+/* Connection Form Panel (right side) */
+#connectionFormPanel {
+    background-color: #1e1e2e;
+    border: none;
+}
+
+/* Connection Form Widget styling */
+ConnectionFormWidget QLabel {
+    color: #a6adc8;
+    font-size: 10pt;
+}
+
+ConnectionFormWidget QLineEdit,
+ConnectionFormWidget QSpinBox,
+ConnectionFormWidget QComboBox {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #cdd6f4;
+    font-size: 10pt;
+}
+
+ConnectionFormWidget QLineEdit:focus,
+ConnectionFormWidget QSpinBox:focus,
+ConnectionFormWidget QComboBox:focus {
+    border: 1px solid #89b4fa;
+}
+
+ConnectionFormWidget QComboBox::drop-down {
+    border: none;
+    padding-right: 10px;
+}
+
+ConnectionFormWidget QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #a6adc8;
+    margin-right: 10px;
+}
+
+ConnectionFormWidget QComboBox QAbstractItemView {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    selection-background-color: #45475a;
+    color: #cdd6f4;
+}
+
+ConnectionFormWidget QCheckBox {
+    color: #cdd6f4;
+    spacing: 8px;
+}
+
+ConnectionFormWidget QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid #45475a;
+    background-color: #313244;
+}
+
+ConnectionFormWidget QCheckBox::indicator:checked {
+    background-color: #89b4fa;
+    border-color: #89b4fa;
+}
+
+ConnectionFormWidget QToolButton {
+    background: transparent;
+    border: none;
+    color: #a6adc8;
+    font-size: 10pt;
+    padding: 4px;
+}
+
+ConnectionFormWidget QToolButton:hover {
+    color: #cdd6f4;
+}
+
+#formTestButton {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 8px 24px;
+    color: #cdd6f4;
+}
+
+#formTestButton:hover {
+    background-color: #45475a;
+}
+
+#formConnectButton {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+}
+
+#formConnectButton:hover {
+    background-color: #b4befe;
+}
+
+#saveConnectionTitle {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #cdd6f4;
+    padding-top: 12px;
+    border: none;
+}
+
+#formSaveButton {
+    background-color: #a6e3a1;
+    color: #1e1e2e;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+}
+
+#formSaveButton:hover {
+    background-color: #94e2d5;
+}
+
+#sslLabel {
+    color: #cdd6f4;
+    font-weight: 500;
+}
+
+/* ===== Config Dialog ===== */
+
+ConfigDialog {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+}
+
+ConfigDialog QLabel {
+    color: #a6adc8;
+    font-size: 10pt;
+}
+
+ConfigDialog QLineEdit,
+ConfigDialog QSpinBox,
+ConfigDialog QComboBox {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #cdd6f4;
+    font-size: 10pt;
+}
+
+ConfigDialog QLineEdit:focus,
+ConfigDialog QSpinBox:focus,
+ConfigDialog QComboBox:focus {
+    border: 1px solid #89b4fa;
+}
+
+ConfigDialog QComboBox::drop-down {
+    border: none;
+    padding-right: 10px;
+}
+
+ConfigDialog QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #a6adc8;
+    margin-right: 10px;
+}
+
+ConfigDialog QComboBox QAbstractItemView {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    selection-background-color: #45475a;
+    color: #cdd6f4;
+}
+
+ConfigDialog QPushButton {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 8px 16px;
+    color: #cdd6f4;
+    font-size: 10pt;
+}
+
+ConfigDialog QPushButton:hover {
+    background-color: #45475a;
+}
+
+ConfigDialog QPushButton:pressed {
+    background-color: #585b70;
+}
+
+ConfigDialog #connectButton {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+    font-weight: bold;
+    border: none;
+}
+
+ConfigDialog #connectButton:hover {
+    background-color: #b4befe;
+}
+
+ConfigDialog QCheckBox {
+    color: #cdd6f4;
+    spacing: 8px;
+}
+
+ConfigDialog QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid #45475a;
+    background-color: #313244;
+}
+
+ConfigDialog QCheckBox::indicator:checked {
+    background-color: #89b4fa;
+    border-color: #89b4fa;
+}
+
+ConfigDialog QToolButton {
+    background: transparent;
+    border: none;
+    color: #a6adc8;
+    font-size: 10pt;
+    padding: 4px;
+}
+
+ConfigDialog QToolButton:hover {
+    color: #cdd6f4;
+}
+
+ConfigDialog #configSslLabel {
+    color: #cdd6f4;
+    font-weight: 500;
+}
+
+ConfigDialog #configStatusLabel {
+    padding: 6px;
+    border-radius: 4px;
 }

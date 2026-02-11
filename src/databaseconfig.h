@@ -14,7 +14,7 @@ struct DatabaseConfig {
     };
 
     DatabaseType type;
-    QString name;           // Database name or file path for SQLite
+    QString name;       
     QString host;
     int port;
     QString username;
@@ -53,9 +53,9 @@ struct DatabaseConfig {
                 if (QSqlDatabase::isDriverAvailable("QMARIADB")) {
                     return "QMARIADB";
                 }
-                return "QMYSQL";  // Return default even if unavailable for error message
+                return "QMYSQL"; 
             case PostgreSQL:
-                return "QPSQL";
+                return "QPSQL"; 
             case Oracle:
                 return "QOCI";
             default:

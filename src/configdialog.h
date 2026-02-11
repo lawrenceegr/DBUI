@@ -14,9 +14,6 @@
 #include <QToolButton>
 #include "databaseconfig.h"
 
-/**
- * @brief Dialog for configuring database connection settings
- */
 class ConfigDialog : public QDialog {
     Q_OBJECT
 
@@ -39,7 +36,6 @@ private slots:
 
 private:
     void setupUI();
-    void setupStyles();
     void updateFieldsVisibility();
     void populateFromConfig(const DatabaseConfig& config);
 

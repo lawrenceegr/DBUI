@@ -10,7 +10,21 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Core)
+
+# qt_standard_project_setup()
+
+# Platform-specific icon resources
+if(WIN32)
+    set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/resources/DBUI.rc")
+endif()
+
+# if(APPLE)
+#     set(MACOSX_BUNDLE_ICON_FILE logo.icns)
+#     set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/resources/logo.icns")
+#     set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+# endif()
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -18,12 +32,17 @@ set(PROJECT_SOURCES
         mainwindow.h
         mainwindow.ui
         resources/resources.qrc
-        resources/photosurface.qrc
         src/databaseconfig.h
         src/databasemanager.h
         src/databasemanager.cpp
         src/configdialog.h
         src/configdialog.cpp
+        src/connectionformwidget.h
+        src/connectionformwidget.cpp
+        src/connectionstore.h
+        ${app_icon_resource_windows}
+        # ${app_icon_macos}
+        # ${APP_ICON_RES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -72,6 +91,34 @@ install(TARGETS DBUI
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+qt_generate_deploy_app_script(
+    TARGET DBUI
+    FILENAME_VARIABLE deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})
+
+# Cpack 
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/DBUI.desktop"
+    DESTINATION share/applications
+) 
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/resources/logo.png"
+    DESTINATION share/icons/hicolor/256x256/apps
+    RENAME dbui.png
+)
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGE_NAME "DBUI")
+set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Lawrence Langat")
+set(CPACK_PACKAGING_INSTALL_PREFIX "/usr")
+set(CPACK_DEBIAN_FILE_NAME "DEB-DEFAULT")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6widgets6 (>= 6.2), libqt6sql6 (>= 6.2), libqt6core6 (>= 6.2)")
+
+include(CPack)
+
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(DBUI)
 endif()
+

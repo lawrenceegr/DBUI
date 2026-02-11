@@ -40,3 +40,5 @@ build_cmake/
 
 # project files
 build/
+
+.vscode/

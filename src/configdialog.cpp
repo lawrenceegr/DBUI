@@ -12,7 +12,6 @@ ConfigDialog::ConfigDialog(QWidget *parent)
     : QDialog(parent)
 {
     setupUI();
-    setupStyles();
     setWindowTitle("Database Configuration");
     resize(480, 420);
 }
@@ -20,101 +19,12 @@ ConfigDialog::ConfigDialog(QWidget *parent)
 ConfigDialog::~ConfigDialog() {
 }
 
-void ConfigDialog::setupStyles() {
-    setStyleSheet(R"(
-        QDialog {
-            background-color: #1e1e2e;
-            color: #cdd6f4;
-        }
-        QLabel {
-            color: #a6adc8;
-            font-size: 12px;
-        }
-        QLineEdit, QSpinBox, QComboBox {
-            background-color: #313244;
-            border: 1px solid #45475a;
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: #cdd6f4;
-            font-size: 13px;
-        }
-        QLineEdit:focus, QSpinBox:focus, QComboBox:focus {
-            border: 1px solid #89b4fa;
-        }
-        QComboBox::drop-down {
-            border: none;
-            padding-right: 10px;
-        }
-        QComboBox::down-arrow {
-            image: none;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 6px solid #a6adc8;
-            margin-right: 10px;
-        }
-        QComboBox QAbstractItemView {
-            background-color: #313244;
-            border: 1px solid #45475a;
-            selection-background-color: #45475a;
-            color: #cdd6f4;
-        }
-        QPushButton {
-            background-color: #313244;
-            border: 1px solid #45475a;
-            border-radius: 6px;
-            padding: 8px 16px;
-            color: #cdd6f4;
-            font-size: 13px;
-        }
-        QPushButton:hover {
-            background-color: #45475a;
-        }
-        QPushButton:pressed {
-            background-color: #585b70;
-        }
-        QPushButton#connectButton {
-            background-color: #89b4fa;
-            color: #1e1e2e;
-            font-weight: bold;
-            border: none;
-        }
-        QPushButton#connectButton:hover {
-            background-color: #b4befe;
-        }
-        QCheckBox {
-            color: #cdd6f4;
-            spacing: 8px;
-        }
-        QCheckBox::indicator {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-            border: 1px solid #45475a;
-            background-color: #313244;
-        }
-        QCheckBox::indicator:checked {
-            background-color: #89b4fa;
-            border-color: #89b4fa;
-        }
-        QToolButton {
-            background: transparent;
-            border: none;
-            color: #a6adc8;
-            font-size: 12px;
-            padding: 4px;
-        }
-        QToolButton:hover {
-            color: #cdd6f4;
-        }
-    )");
-}
-
 void ConfigDialog::setupUI() {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->setSpacing(12);
     mainLayout->setContentsMargins(20, 20, 20, 20);
 
-    // ===== Connection Type =====
+    // Connection Type 
     QLabel* typeLabel = new QLabel("Connection Type", this);
     mainLayout->addWidget(typeLabel);
 
@@ -125,7 +35,7 @@ void ConfigDialog::setupUI() {
     m_dbTypeCombo->addItem("Oracle", DatabaseConfig::Oracle);
     mainLayout->addWidget(m_dbTypeCombo);
 
-    // ===== Server Fields Container (hidden for SQLite) =====
+    // Server Fields Container (hidden for SQLite) 
     m_serverFieldsWidget = new QWidget(this);
     QVBoxLayout* serverLayout = new QVBoxLayout(m_serverFieldsWidget);
     serverLayout->setContentsMargins(0, 0, 0, 0);
@@ -168,7 +78,7 @@ void ConfigDialog::setupUI() {
     m_sslExpandButton->setChecked(false);
 
     QLabel* sslLabel = new QLabel("Enable SSL", this);
-    sslLabel->setStyleSheet("color: #cdd6f4; font-weight: 500;");
+    sslLabel->setObjectName("configSslLabel");
 
     m_sslCheckBox = new QCheckBox(this);
 
@@ -232,7 +142,7 @@ void ConfigDialog::setupUI() {
 
     mainLayout->addWidget(m_serverFieldsWidget);
 
-    // ===== Database Name / File =====
+    // Database Name / File 
     QVBoxLayout* dbLayout = new QVBoxLayout();
     dbLayout->setSpacing(4);
 
@@ -251,7 +161,7 @@ void ConfigDialog::setupUI() {
 
     mainLayout->addLayout(dbLayout);
 
-    // ===== Connection Name =====
+    // Connection Name 
     QVBoxLayout* connNameLayout = new QVBoxLayout();
     connNameLayout->setSpacing(4);
     QLabel* connNameLabel = new QLabel("Connection Name", this);
@@ -262,15 +172,15 @@ void ConfigDialog::setupUI() {
     connNameLayout->addWidget(m_connectionNameEdit);
     mainLayout->addLayout(connNameLayout);
 
-    // ===== Status Label =====
+    // Status Label 
     m_statusLabel = new QLabel(this);
+    m_statusLabel->setObjectName("configStatusLabel");
     m_statusLabel->setWordWrap(true);
-    m_statusLabel->setStyleSheet("padding: 6px; border-radius: 4px;");
     mainLayout->addWidget(m_statusLabel);
 
     mainLayout->addStretch();
 
-    // ===== Buttons =====
+    // Buttons 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->setSpacing(10);
 
@@ -285,7 +195,7 @@ void ConfigDialog::setupUI() {
     buttonLayout->addWidget(m_connectButton);
     mainLayout->addLayout(buttonLayout);
 
-    // ===== Connect Signals =====
+    // Connect Signals 
     connect(m_dbTypeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &ConfigDialog::onDatabaseTypeChanged);
     connect(m_browseButton, &QPushButton::clicked,
