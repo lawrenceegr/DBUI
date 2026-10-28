@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_config.load(settings);
 
     iconMenu = new QMenu(this);
-    iconMenu->setIcon(QIcon(":/logo.svg"));
+    iconMenu->setIcon(QIcon(":/icons/logo.svg"));
     ui->menubar->setCornerWidget(new QLabel(), Qt::TopLeftCorner);
     ui->menubar->insertMenu(ui->menubar->actions().isEmpty() ? nullptr : ui->menubar->actions().first(), iconMenu);
 

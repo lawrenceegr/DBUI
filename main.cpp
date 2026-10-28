@@ -10,14 +10,14 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QApplication::setDesktopFileName("DBUI");
 
-    QFile styleFile(":/style.qss");
+    QFile styleFile(":/styles/style.qss");
     if (styleFile.open(QFile::ReadOnly | QFile::Text)) {
         a.setStyleSheet(styleFile.readAll());
         styleFile.close();
     }
 
     MainWindow w;
-    w.setWindowIcon(QIcon(":/logo.png"));
+    w.setWindowIcon(QIcon(":/icons/logo.png"));
     w.show();
     return a.exec();
 }
